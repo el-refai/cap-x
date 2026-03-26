@@ -10,6 +10,14 @@ env:
       - FrankaControlSpillWipePrivilegedApi
     # prompt is inherited from FrankaSpillWipeCodeEnv class default
 
+
+api_servers:
+  - _target_: capx.serving.launch_pyroki_server.main
+    port: 8116
+    host: 127.0.0.1
+    robot: panda_description
+    target_link: panda_hand
+
 record_video: true
 output_dir: ./outputs/franka_robosuite_spill_wipe_privileged_oracle
 use_oracle_code: true

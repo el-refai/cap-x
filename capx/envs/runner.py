@@ -92,7 +92,7 @@ def _stop_api_servers(server_procs: list) -> None:
     """Terminate API server sub-processes."""
     for proc in server_procs:
         proc.terminate()
-        proc.join()
+        proc.join(timeout=5.0)
 
 
 # ---------------------------------------------------------------------------

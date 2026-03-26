@@ -287,23 +287,26 @@ def run_parallel_with_setup(
     errors: list[tuple[int, str]] = []
     setup_errors = 0
 
-    for _ in range(len(trial_ids)):
-        status, identifier, data = result_queue.get()
-        if status == "success":
-            results.append(data)
-        elif status == "setup_error":
-            setup_errors += 1
-            print(f"Worker {identifier} failed during setup: {data}")
-        else:
-            errors.append((identifier, data))
-            print(f"Trial {identifier} failed with error: {data}")
-
-    # Wait for all workers to finish
-    for p in workers:
-        p.join(timeout=5.0)
-        if p.is_alive():
-            p.terminate()
-            p.join()
+    try:
+        for _ in range(len(trial_ids)):
+            status, identifier, data = result_queue.get()
+            if status == "success":
+                results.append(data)
+            elif status == "setup_error":
+                setup_errors += 1
+                print(f"Worker {identifier} failed during setup: {data}")
+            else:
+                errors.append((identifier, data))
+                print(f"Trial {identifier} failed with error: {data}")
+    finally:
+        # Always clean up workers, including on KeyboardInterrupt
+        for p in workers:
+            p.join(timeout=5.0)
+            if p.is_alive():
+                p.terminate()
+                p.join(timeout=3.0)
+                if p.is_alive():
+                    p.kill()  # SIGKILL for workers stuck in C extension code
 
     if setup_errors:
         print(f"WARNING: {setup_errors} worker(s) failed during setup")

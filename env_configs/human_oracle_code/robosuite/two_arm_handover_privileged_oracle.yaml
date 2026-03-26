@@ -32,6 +32,13 @@ env:
       You may write python code comments for reasoning but ONLY write the executable Python code and do not write it in code fences.
       The functions (APIs) below are already imported to the environment. If you want to use numpy, you need to import it explicitly.
     
+api_servers:
+  - _target_: capx.serving.launch_pyroki_server.main
+    port: 8116
+    host: 127.0.0.1
+    robot: panda_description
+    target_link: panda_hand
+
 record_video: true
 output_dir: ./outputs/two_arm_handover_privileged_oracle
 
