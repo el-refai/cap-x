@@ -1,4 +1,4 @@
-# Usage: uv run hyrl/envs/launch.py --config-path env_configs/cube_stack/franka_robosuite_cube_stack_multiturn_vdm_reduced_api_skill_lib.yaml
+# Usage: uv run capx/envs/launch.py --config-path env_configs/cube_stack/franka_robosuite_cube_stack_multiturn_vdm_reduced_api_skill_lib.yaml
 
 env:
   _target_: capx.envs.tasks.franka.franka_pick_place.FrankaPickPlaceCodeEnv

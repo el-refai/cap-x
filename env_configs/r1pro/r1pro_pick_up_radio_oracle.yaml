@@ -1,4 +1,4 @@
-# Usage: uv run hyrl/envs/launch.py --config-path env_configs/r1pro/r1pro_pick_up_radio.yaml
+# Usage: uv run capx/envs/launch.py --config-path env_configs/r1pro/r1pro_pick_up_radio_oracle.yaml
 
 env:
   _target_: capx.envs.tasks.r1pro.r1pro_pickup_radio.R1ProRadioCodeEnv

@@ -1,4 +1,4 @@
-# Usage: uv run hyrl/envs/launch.py --config-path env_configs/cube_lifting/franka_robosuite_cube_lifting_multiturn_vf.yaml
+# Usage: uv run capx/envs/launch.py --config-path env_configs/cube_lifting/franka_robosuite_cube_lifting_multiturn_vf.yaml
 
 env:
   _target_: capx.envs.tasks.franka.franka_lift.FrankaLiftCodeEnv

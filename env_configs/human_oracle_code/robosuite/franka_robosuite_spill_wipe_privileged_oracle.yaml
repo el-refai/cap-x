@@ -1,4 +1,4 @@
-# Usage: uv run hyrl/envs/launch.py --config-path env_configs/human_oracle_code/franka_robosuite_spill_wipe_privileged_oracle.yaml
+# Usage: uv run capx/envs/launch.py --config-path env_configs/human_oracle_code/robosuite/franka_robosuite_spill_wipe_privileged_oracle.yaml
 
 env:
   _target_: capx.envs.tasks.franka.franka_spill_wipe.FrankaSpillWipeCodeEnv
@@ -7,7 +7,7 @@ env:
     low_level: franka_robosuite_spill_wipe_low_level
     privileged: true
     apis:
-      - FrankaControlPrivilegedApiSpongeEndEffector
+      - FrankaControlSpillWipePrivilegedApi
     # prompt is inherited from FrankaSpillWipeCodeEnv class default
 
 record_video: true

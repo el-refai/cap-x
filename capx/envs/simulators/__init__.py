@@ -29,7 +29,9 @@ try:
     register_env("two_arm_handover_robosuite", RobosuiteHandoverEnv)
     register_env("two_arm_lift_robosuite", RobosuiteTwoArmLiftEnv)
 except Exception:
+    import traceback
     print("Robosuite not installed!")
+    traceback.print_exc()
 
 # NOTE: Can only have one of LIBERO or Robosuite installed at a time!
 # Using LIBERO run: uv sync --extra libero --extra contactgraspnet
@@ -55,10 +57,14 @@ try:
             _name = f"franka_libero_{_suite}_{_tid}_low_level"
             register_env(_name, functools.partial(FrankaLiberoTask, suite_name=_suite, task_id=_tid))
 except Exception:
+    # import traceback
     print("LIBERO not installed!")
+    # traceback.print_exc()
 
 try:
     from .r1pro_b1k import R1ProBehaviourLowLevel
     register_env("r1pro_b1k_low_level", R1ProBehaviourLowLevel)
 except Exception:
+    # import traceback
     print("R1Pro not installed!")
+    # traceback.print_exc()

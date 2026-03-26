@@ -1,4 +1,4 @@
-# Usage: uv run hyrl/envs/launch.py --config-path env_configs/human_oracle_code/franka_robosuite_cube_stack_oracle.yaml
+# Usage: uv run capx/envs/launch.py --config-path env_configs/human_oracle_code/robosuite/franka_robosuite_cube_stack_oracle.yaml
 
 env:
   _target_: capx.envs.tasks.franka.franka_pick_place.FrankaPickPlaceCodeEnv
