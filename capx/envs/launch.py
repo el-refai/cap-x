@@ -156,7 +156,7 @@ def _ensure_frontend_built() -> None:
         return
 
     print("[web-ui] Building frontend...")
-    nodeenv_dir = Path.home() / ".hyrl_nodeenv"
+    nodeenv_dir = Path.home() / ".capx_nodeenv"
     npm_bin = nodeenv_dir / "bin" / "npm"
     node_bin = nodeenv_dir / "bin" / "node"
 

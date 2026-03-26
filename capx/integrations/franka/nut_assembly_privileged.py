@@ -84,15 +84,6 @@ class FrankaControlNutAssemblyPrivilegedApi(ApiBase):
         else:
             raise ValueError(f"Invalid object name: {object_name}")
 
-            # TODO: Catch case:
-            # Traceback (most recent call last):
-            # File "/home/hyrl/HyRL/hyrl/envs/control/base_executor.py", line 164, in _exec_user_code
-            #     exec(code, self._exec_globals, self._exec_globals)
-            # File "<string>", line 31, in <module>
-            # File "/home/hyrl/HyRL/hyrl/integrations/franka_control_nut_assembly_privileged_api.py", line 82, in get_object_pose
-            #     raise ValueError(f"Invalid object name: {object_name}")
-            # ValueError: Invalid object name: small square peg
-
     def sample_grasp_pose(self, object_name: str) -> tuple[np.ndarray, np.ndarray]:
         """Sample a grasp pose for an object in the environment from a natural language description.
         Do use the grasp sample quaternion from sample_grasp_pose.

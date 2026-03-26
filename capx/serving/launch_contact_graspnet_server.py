@@ -513,7 +513,7 @@ def main(device: str = "cuda", port: int = 8115, host: str = "127.0.0.1"):
     # --- Setup Paths & Import ---
 
     here = os.path.dirname(os.path.abspath(__file__))
-    # Assume capx/serving -> go up to hyrl -> go to third_party
+    # Assume capx/serving -> go up to capx -> go to third_party
     vendor_root = os.path.normpath(
         os.path.join(here, "..", "third_party", "contact_graspnet_pytorch")
     )
