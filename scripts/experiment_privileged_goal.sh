@@ -4,7 +4,7 @@
 # Purpose: Establish upper bound — if this gets 0%, problem is motion planning, not perception
 set -e
 
-cd /home/gear/HyRL-main-regression
+cd "$(git rev-parse --show-toplevel)"
 
 SUITE="libero_goal_swap"
 TRIALS=10

@@ -4,7 +4,7 @@
 # Requires: PyRoKi (8116), NV LLM (8110)
 set -e
 
-cd /home/gear/HyRL-main-regression
+cd "$(git rev-parse --show-toplevel)"
 
 SUITE="libero_object_swap"
 TASK_ID=0

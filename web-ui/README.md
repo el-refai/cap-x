@@ -1,4 +1,4 @@
-# HyRL Interactive Web UI
+# CaP-X Interactive Web UI
 
 A modern chat-based interface for real-time robot code execution demos.
 
@@ -36,7 +36,7 @@ A modern chat-based interface for real-time robot code execution demos.
 
 ### Backend Setup
 
-The backend is part of the HyRL package. No additional setup needed.
+The backend is part of the CaP-X package. No additional setup needed.
 
 ### Frontend Setup
 
@@ -50,8 +50,8 @@ npm install
 ### 1. Start the Backend Server
 
 ```bash
-# From the HyRL root directory
-uv run python -m hyrl.web.server --port 8200
+# From the CaP-X root directory
+uv run python -m capx.web.server --port 8200
 ```
 
 ### 2. Start the Frontend Dev Server
@@ -101,7 +101,7 @@ src/
 ### Backend Structure
 
 ```
-hyrl/web/
+capx/web/
 ├── server.py              # FastAPI app + WebSocket
 ├── models.py              # Pydantic schemas
 ├── session_manager.py     # Session tracking
