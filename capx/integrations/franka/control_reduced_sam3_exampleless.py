@@ -58,6 +58,20 @@ class FrankaControlApiReducedSam3Exampleless(FrankaControlApiReducedSam3):
             bimanual=bimanual,
         )
 
+    def functions(self) -> dict[str, Any]:
+        fns = super().functions()
+        if self.is_spill_wipe:
+            for key in (
+                "plan_grasp",
+                "get_oriented_bounding_box_from_3d_points",
+                "open_gripper",
+                "close_gripper",
+            ):
+                fns.pop(key, None)
+        elif self.is_peg_assembly:
+            fns.pop("plan_grasp", None)
+        return fns
+
     def combined_doc(self) -> str:
         """Aggregate function docs with examples stripped."""
         lines: list[str] = []

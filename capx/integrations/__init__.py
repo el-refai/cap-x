@@ -1,7 +1,7 @@
 from .base_api import list_apis, register_api
 from .franka.control import FrankaControlApi
 from .franka.control_reduced import FrankaControlApiReduced
-from .franka.control_reduced_exampleless import FrankaControlApiReducedExampleless
+
 from .franka.control_reduced_sam3 import FrankaControlApiReducedSam3
 from .franka.control_reduced_skill_library import FrankaControlApiReducedSkillLibrary
 
@@ -46,7 +46,7 @@ register_api(
     "FrankaControlApiReducedSpillWipe",
     lambda env: FrankaControlApiReducedSam3(env, tcp_offset=[0.0, 0.0, -0.0158]),
 )
-register_api("FrankaControlApiReducedExampleless", FrankaControlApiReducedExampleless)
+register_api("FrankaControlApiReducedExampleless", FrankaControlApiReducedSam3Exampleless)
 
 register_api("FrankaControlApiReducedSkillLibrary", FrankaControlApiReducedSkillLibrary)
 register_api(
@@ -78,7 +78,7 @@ register_api(
 )
 register_api(
     "FrankaControlSpillWipeApiReducedExampleless",
-    lambda env: FrankaControlApiReducedExampleless(
+    lambda env: FrankaControlApiReducedSam3Exampleless(
         env, tcp_offset=[0.0, 0.0, -0.0158], is_spill_wipe=True
     ),
 )
@@ -100,7 +100,7 @@ register_api(
 )
 register_api(
     "FrankaControlNutAssemblyApiReducedExampleless",
-    lambda env: FrankaControlApiReducedExampleless(env, is_peg_assembly=True),
+    lambda env: FrankaControlApiReducedSam3Exampleless(env, is_peg_assembly=True),
 )
 # Register multi-turn variant with multi_turn=True
 register_api(
