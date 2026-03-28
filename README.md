@@ -36,7 +36,7 @@ Shankar Sastry<sup>2</sup>, Yuke Zhu<sup>1</sup>, Ken Goldberg<sup>&dagger;,2</s
 CaP-X uses [uv](https://docs.astral.sh/uv/) for dependency management. Requires **Python 3.10** and a **CUDA-capable GPU**.
 
 ```bash
-git clone --recurse-submodules https://github.com/capgym/cap-x && cd CaP-X
+git clone --recurse-submodules https://github.com/capgym/cap-x && cd cap-x
 
 # Or if already cloned without --recurse-submodules:
 git submodule update --init --recursive
