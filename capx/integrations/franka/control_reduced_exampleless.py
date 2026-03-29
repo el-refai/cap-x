@@ -48,6 +48,7 @@ class FrankaControlApiReducedExampleless(FrankaControlApiReduced):
         is_peg_assembly: bool = False,
         is_handover: bool = False,
         bimanual: bool = False,
+        use_sam3: bool = True,
     ) -> None:
         super().__init__(
             env,
@@ -56,6 +57,7 @@ class FrankaControlApiReducedExampleless(FrankaControlApiReduced):
             is_peg_assembly=is_peg_assembly,
             is_handover=is_handover,
             bimanual=bimanual,
+            use_sam3=use_sam3,
         )
 
     def functions(self) -> dict[str, Any]:

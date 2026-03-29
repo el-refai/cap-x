@@ -29,10 +29,9 @@ from capx.integrations.vision.graspnet import init_contact_graspnet
 from capx.integrations.vision.molmo import init_molmo
 from capx.integrations.motion.pyroki import init_pyroki, init_pyroki_trajopt
 
-# from capx.integrations.vision.owlvit import init_owlvit
+from capx.integrations.vision.owlvit import init_owlvit
 from capx.integrations.motion.pyroki_context import get_pyroki_context  # type: ignore
-
-# from capx.integrations.vision.sam2 import init_sam2
+from capx.integrations.vision.sam2 import init_sam2
 from capx.integrations.vision.sam3 import init_sam3, init_sam3_point_prompt
 from capx.utils.camera_utils import obs_get_rgb
 from capx.utils.depth_utils import depth_color_to_pointcloud, depth_to_pointcloud, depth_to_rgb
@@ -59,18 +58,25 @@ class FrankaControlApiReduced(ApiBase):
         is_handover: bool = False,
         bimanual: bool = False,
         real: bool = False,
+        use_sam3: bool = True,
     ) -> None:
         super().__init__(env)
-        # Lazy-import to keep startup light
         self._TCP_OFFSET = np.array(tcp_offset, dtype=np.float64)
+        self.use_sam3 = use_sam3
         print("init franka control api")
         self.grasp_net_plan_fn = (
             init_contact_graspnet()
         )  # TODO: refactor this and use registered api instead
         print("init grasp net plan fn")
-        self.sam3_seg_fn = init_sam3()
-        self.sam3_point_prompt_fn = init_sam3_point_prompt()
-        print("init sam3 seg fn")
+        if self.use_sam3:
+            self.sam3_seg_fn = init_sam3()
+            self.sam3_point_prompt_fn = init_sam3_point_prompt()
+            print("init sam3 seg fn")
+        else:
+            self.owl_vit_det_fn = init_owlvit(device="cuda")
+            print("init owlvit det fn")
+            self.sam2_seg_fn = init_sam2()
+            print("init sam2 seg fn")
         self.molmo_point_fn = init_molmo()
         print("init molmo point fn")
 
@@ -85,10 +91,14 @@ class FrankaControlApiReduced(ApiBase):
     def functions(self) -> dict[str, Any]:
         fns = {
             "get_observation": self.get_observation,
-            "segment_sam3_text_prompt": self.segment_sam3_text_prompt,
-            "segment_sam3_point_prompt": self.segment_sam3_point_prompt,
             "point_prompt_molmo": self.point_prompt_molmo,
         }
+        if self.use_sam3:
+            fns["segment_sam3_text_prompt"] = self.segment_sam3_text_prompt
+            fns["segment_sam3_point_prompt"] = self.segment_sam3_point_prompt
+        else:
+            fns["detect_object_owlvit"] = self.detect_object_owlvit
+            fns["segment_sam2"] = self.segment_sam2
         # if not self.is_spill_wipe:
         #     if not self.is_peg_assembly:
         fns["plan_grasp"] = self.plan_grasp
@@ -139,7 +149,88 @@ class FrankaControlApiReduced(ApiBase):
     # - ["robot_cartesian_pose_wxyz_xyz"]: Current Cartesian pose (quaternion wxyz, then position xyz) of the robot (including gripper as the last element) as a numpy array of shape (8,), dtype float64.
 
     # --------------------------------------------------------------------- #
-    # Vision models: Sam3 segmentation
+    # Vision models: OWL-ViT detection + SAM2 segmentation (use_sam3=False)
+    # --------------------------------------------------------------------- #
+
+    def detect_object_owlvit(
+        self,
+        rgb: np.ndarray,
+        text: str,
+    ) -> list[dict[str, Any]]:
+        """Run OWL-ViT open-vocabulary detection on a single RGB image.
+
+        Args:
+            rgb:
+                RGB image array of shape (H, W, 3), dtype uint8.
+            text:
+                Natural language text query for OWL-ViT.
+
+        Returns:
+            detections:
+                A list of dictionaries, one per detected box. Each dict contains:
+
+                  - "box":   [x1, y1, x2, y2] in pixel coordinates (float)
+                  - "label": str, the text label that matched best
+                  - "score": float, confidence score in [0, 1]
+
+        Example:
+            >>> rgb = obs["robot0_robotview"]["images"]["rgb"]
+            >>> dets = detect_object_owlvit(rgb, text="red mug")
+            >>> if dets:
+            ...     best = max(dets, key=lambda d: d["score"])
+            ...     print(best["box"], best["label"], best["score"])
+        """
+        self._log_step("OWL-ViT Detection", f"Running OWL-ViT for '{text}' …", images=rgb)
+        results = self.owl_vit_det_fn(rgb, texts=[[text]])
+        if results:
+            best_score = max(d["score"] for d in results)
+            self._log_step_update(text=f"{len(results)} detection(s), best score: {best_score:.3f}")
+        else:
+            self._log_step_update(text="No detections.")
+        return results
+
+    def segment_sam2(
+        self,
+        rgb: np.ndarray,
+        box: list[float] | None = None,
+    ) -> list[dict[str, Any]]:
+        """Run SAM2 segmentation on an RGB image, optionally conditioned on a box.
+
+        Args:
+            rgb:
+                RGB image array of shape (H, W, 3), dtype uint8.
+            box:
+                Optional bounding box [x1, y1, x2, y2] in pixel coordinates, float.
+                If provided, SAM2 will segment primarily within this region.
+                If None, SAM2 runs in global mode over the whole image.
+
+        Returns:
+            masks:
+                A list of dictionaries. Each dict may contain:
+
+                  - "mask":  np.ndarray of shape (H, W), dtype bool or uint8,
+                              where True/1 means the pixel belongs to the instance.
+                  - "score": float confidence score (if provided by SAM2).
+
+        Example:
+            >>> rgb = obs["robot0_robotview"]["images"]["rgb"]
+            >>> dets = detect_object_owlvit(rgb, text="red mug")
+            >>> best = max(dets, key=lambda d: d["score"])
+            >>> masks = segment_sam2(rgb, box=best["box"])
+        """
+        box_str = f" with box {box}" if box is not None else ""
+        self._log_step("SAM2 Segmentation", f"Running SAM2{box_str} …", images=rgb)
+        results = self.sam2_seg_fn(rgb, box=box)
+        masks = [r["mask"] for r in results if r.get("score", 0) > 0.05]
+        if masks:
+            vis = overlay_segmentation_masks(rgb, masks)
+            self._log_step_update(text=f"Returned {len(results)} mask(s)", images=vis)
+        else:
+            self._log_step_update(text="No masks returned.")
+        return results
+
+    # --------------------------------------------------------------------- #
+    # Vision models: SAM3 segmentation (use_sam3=True)
     # --------------------------------------------------------------------- #
 
     def segment_sam3_point_prompt(
@@ -337,7 +428,8 @@ class FrankaControlApiReduced(ApiBase):
         self._env.grasp_sample_tf = (
             vtf.SE3.from_matrix(self._env.grasp_sample) @ vtf.SE3.from_translation(np.array([0, 0, 0.12]))
         ).as_matrix()
-        self._env._update_viser_server()
+        if hasattr(self._env, "viser_server"):
+            self._env._update_viser_server()
         n_candidates = len(self._env.grasp_scores)
         best_score = float(self._env.grasp_scores.max()) if n_candidates > 0 else 0.0
         self._log_step_update(text=f"{n_candidates} candidates, best score={best_score:.3f}")

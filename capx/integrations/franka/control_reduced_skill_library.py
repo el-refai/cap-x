@@ -19,11 +19,7 @@ from capx.integrations.vision.graspnet import init_contact_graspnet
 from capx.integrations.vision.molmo import init_molmo
 from capx.integrations.motion.pyroki import init_pyroki
 
-# from capx.integrations.vision.owlvit import init_owlvit
 from capx.integrations.motion.pyroki_context import get_pyroki_context  # type: ignore
-
-# from capx.integrations.vision.sam2 import init_sam2
-from capx.integrations.vision.sam3 import init_sam3, init_sam3_point_prompt
 from capx.utils.camera_utils import obs_get_rgb
 from capx.utils.depth_utils import depth_color_to_pointcloud, depth_to_pointcloud, depth_to_rgb
 
@@ -41,8 +37,9 @@ class FrankaControlApiReducedSkillLibrary(FrankaControlApiReduced):
         bimanual: bool = False,
         is_handover: bool = False,
         real: bool = False,
+        use_sam3: bool = True,
     ) -> None:
-        super().__init__(env, tcp_offset=tcp_offset, bimanual=bimanual, is_handover=is_handover, real=real)
+        super().__init__(env, tcp_offset=tcp_offset, bimanual=bimanual, is_handover=is_handover, real=real, use_sam3=use_sam3)
 
     def functions(self) -> dict[str, Any]:
         fns = super().functions()

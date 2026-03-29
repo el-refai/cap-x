@@ -24,31 +24,33 @@ class BatchLaunchArgs:
             # "env_configs/two_arm_handover/hillclimb/two_arm_handover_multiturn_vdm_reduced_api.yaml"
 
             # "env_configs/cube_lifting/franka_robosuite_cube_lifting_privileged.yaml",
-            "env_configs/cube_lifting/franka_robosuite_cube_lifting.yaml",
+            # "env_configs/cube_lifting/franka_robosuite_cube_lifting.yaml",
             # "env_configs/cube_lifting/franka_robosuite_cube_lifting_reduced_api.yaml",
             # "env_configs/cube_lifting/franka_robosuite_cube_lifting_reduced_api_exampleless.yaml",
             # "env_configs/cube_stack/franka_robosuite_cube_stack_privileged.yaml",
-            "env_configs/cube_stack/franka_robosuite_cube_stack.yaml",
+            # "env_configs/cube_stack/franka_robosuite_cube_stack.yaml",
             # "env_configs/cube_stack/franka_robosuite_cube_stack_reduced_api.yaml",
             # "env_configs/cube_stack/franka_robosuite_cube_stack_reduced_api_exampleless.yaml",
             # "env_configs/cube_restack/franka_robosuite_cube_restack_privileged.yaml",
             # "env_configs/cube_restack/franka_robosuite_cube_restack.yaml",
             # "env_configs/spill_wipe/franka_robosuite_spill_wipe_privileged.yaml",
-            "env_configs/spill_wipe/franka_robosuite_spill_wipe.yaml",
+            # "env_configs/spill_wipe/franka_robosuite_spill_wipe.yaml",
             # "env_configs/spill_wipe/franka_robosuite_spill_wipe_reduced_api.yaml",
             # "env_configs/spill_wipe/franka_robosuite_spill_wipe_reduced_api_exampleless.yaml",
             # "env_configs/nut_assembly/franka_robosuite_nut_assembly_privileged.yaml",
-            "env_configs/nut_assembly/franka_robosuite_nut_assembly.yaml",
+            # "env_configs/nut_assembly/franka_robosuite_nut_assembly.yaml",
             # "env_configs/nut_assembly/franka_robosuite_nut_assembly_reduced_api.yaml",
             # "env_configs/nut_assembly/franka_robosuite_nut_assembly_reduced_api_exampleless.yaml",
             # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_privileged.yaml",
-            "env_configs/two_arm_lift/franka_robosuite_two_arm_lift.yaml",
+            # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift.yaml",
+            "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced.yaml",
+            "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced_exampleless.yaml",
 
             # "env_configs/two_arm_handover/two_arm_handover_multiturn_vdm.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_multiturn_vdm_legacy.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_multiturn.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_privileged.yaml",
-            "env_configs/two_arm_handover/two_arm_handover.yaml",
+            # "env_configs/two_arm_handover/two_arm_handover.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_reduced.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_reduced_exampleless.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_multiturn_vf.yaml",
@@ -124,23 +126,14 @@ class BatchLaunchArgs:
             # "env_configs/spill_wipe/hillclimb/debug_ensemble_franka_robosuite_spill_wipe_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/two_arm_lift/hillclimb/debug_ensemble_franka_robosuite_two_arm_lift_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/two_arm_handover/hillclimb/debug_ensemble_franka_robosuite_two_arm_handover_multiturn_vdm_reduced_api_skill_lib.yaml",
-
-            # LIBERO
-            # "env_configs/libero_pick_place/franka_libero_pick_place.yaml",
-            "env_configs/libero_pick_place/franka_libero_pick_place_vdm_reduced_skill_library.yaml",
         ]
     )
     """List of paths to the YAML configuration files to run sequentially."""
 
     # Overrides (mirrored from LaunchArgs to allow global overrides)
-
-    # server_url: str = "http://128.32.175.97:8111/v1/chat/completions" # athena2 vllm
-    # server_url: str = "http://128.32.175.74:8111/v1/chat/completions" # duchamp3 vllm
-    # server_url: str = "http://128.32.175.42:8111/v1/chat/completions"  # macmini vllm server
-    # server_url: str = "http://128.32.175.42:8110/chat/completions"  # macmini nv server jump
-    # server_url: str = "http://0.0.0.0:8009/v1/responses"  # local nv server for running codex models
-    # server_url: str = "http://0.0.0.0:8110/chat/completions"  # local nv server for running open source models
-    server_url: str = "http://127.0.0.1:8110/chat/completions"  # local nv server jump
+    # server_url: str = "http://0.0.0.0:8009/v1/responses"  # local server for running codex models
+    server_url: str = "http://127.0.0.1:8110/chat/completions"  # local server 
+    # server_url: str = "http://127.0.0.1:8188/chat/completions"
 
 
     models: list[str] = field(
@@ -158,10 +151,13 @@ class BatchLaunchArgs:
             # "deepseek-ai/deepseek-v3.1-terminus",
             # "Qwen/Qwen2.5-Coder-7B-Instruct",
             # "Qwen/Qwen3-VL-8B-Instruct",
-            "google/gemini-3.1-pro-preview", # Closed source models
+            # "google/gemini-3.1-pro-preview", # Closed source models
+            # "gcp/google/gemini-3-pro",
+            # "google/gemini-3-pro",
+            # "gcp/google/gemini-3-flash",
             # "google/gemini-2.5-flash-lite",
             # "aws/anthropic/claude-haiku-4-5-v1",
-            # "aws/anthropic/claude-opus-4-5",
+            "aws/anthropic/claude-opus-4-5",
             # "openai/openai/gpt-5.2",
             # "openai/openai/gpt-5.1"
             # "azure/openai/o1",

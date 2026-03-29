@@ -268,7 +268,7 @@ def query_model(args: "LaunchArgs | ModelQueryArgs", prompt: list[dict]) -> str:
     retry = 1
     while response.status_code in [404, 500, 502, 503, 504]:
         sleep_time = 240 + random.uniform(-90, 90)
-        print(f"Retry {retry}. Model query failed with status code {response.status_code}. Retrying in {sleep_time} seconds...")
+        print(f"Retry {retry}. Model query failed with status code {response.status_code}. Error: {response.text}. Retrying in {sleep_time} seconds...")
         time.sleep(sleep_time)
         response = requests.post(
             server_url, headers=headers, data=json.dumps(payload), timeout=200

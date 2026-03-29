@@ -89,6 +89,15 @@ register_api("FrankaHandoverApiReducedExampleless", FrankaHandoverApiReducedExam
 
 register_api("FrankaTwoArmLiftApi", FrankaTwoArmLiftApi)
 register_api("FrankaTwoArmLiftPrivilegedApi", FrankaTwoArmLiftPrivilegedApi)
+register_api(
+    "FrankaTwoArmLiftApiReduced", 
+    lambda env: FrankaControlApiReduced(env, bimanual=True, use_sam3=False),
+)
+register_api(
+    "FrankaTwoArmLiftApiReducedExampleless",
+    lambda env: FrankaControlApiReducedExampleless(env, bimanual=True, use_sam3=False),
+)
+
 register_api("FrankaControlNutAssemblyPrivilegedApi", FrankaControlNutAssemblyPrivilegedApi)
 register_api("FrankaControlNutAssemblyVisualApi", FrankaControlNutAssemblyVisualApi)
 register_api(
