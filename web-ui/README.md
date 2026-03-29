@@ -45,6 +45,12 @@ cd web-ui
 npm install
 ```
 
+> **After editing frontend code** (e.g. `src/App.tsx`), rebuild the production bundle before launching:
+> ```bash
+> cd web-ui && npm run build
+> ```
+> The `--web-ui True` flag in `launch.py` serves the built assets from `web-ui/dist/`. Without rebuilding, your changes won't take effect.
+
 ## Running
 
 ### 1. Start the Backend Server
