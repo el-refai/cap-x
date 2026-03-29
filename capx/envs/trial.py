@@ -922,6 +922,22 @@ def _run_single_trial(
     else:
         _save_trial_video(env, config, trial, info_step, reward, num_code_blocks)
 
+    # Save MuJoCo state trajectory for offline re-rendering (e.g. Isaac Sim)
+    if config["record_video"] and config["output_dir"] and hasattr(env, "get_state_trajectory"):
+        state_traj = env.get_state_trajectory(clear=True)
+        if state_traj:
+            traj_dir = _trial_video_dir(config, trial, info_step, reward)
+            os.makedirs(traj_dir, exist_ok=True)
+            np.savez_compressed(
+                os.path.join(traj_dir, "state_trajectory.npz"),
+                states=np.array(state_traj),
+            )
+            if hasattr(env, "get_model_xml"):
+                model_xml = env.get_model_xml()
+                if model_xml:
+                    with open(os.path.join(traj_dir, "model.xml"), "w") as f:
+                        f.write(model_xml)
+
     success = info_step["sandbox_rc"] == 0
 
     # --- Evolving skill library integration (opt-in) ---

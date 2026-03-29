@@ -20,6 +20,6 @@ api_servers:
 record_video: true
 output_dir: ./outputs/franka_robosuite_cube_stack_privileged_oracle
 
-trials: 100
+trials: 10
 num_workers: 10
 use_oracle_code: true

@@ -80,7 +80,7 @@ class LaunchArgs:
     use_legacy_multi_turn_decision_prompt: bool | None = None
     """Whether to use the legacy multi-turn decision prompt."""
 
-    visual_differencing_model: str | None = "gcp/google/gemini-3-pro"
+    visual_differencing_model: str | None = "aws/anthropic/claude-opus-4-5" #"gcp/google/gemini-3-pro"
     """Model to use for visual differencing."""
 
     visual_differencing_model_server_url: str | None = (

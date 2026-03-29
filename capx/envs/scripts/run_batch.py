@@ -43,8 +43,8 @@ class BatchLaunchArgs:
             # "env_configs/nut_assembly/franka_robosuite_nut_assembly_reduced_api_exampleless.yaml",
             # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_privileged.yaml",
             # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift.yaml",
-            "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced.yaml",
-            "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced_exampleless.yaml",
+            # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced.yaml",
+            # "env_configs/two_arm_lift/franka_robosuite_two_arm_lift_reduced_exampleless.yaml",
 
             # "env_configs/two_arm_handover/two_arm_handover_multiturn_vdm.yaml",
             # "env_configs/two_arm_handover/two_arm_handover_multiturn_vdm_legacy.yaml",
@@ -107,7 +107,7 @@ class BatchLaunchArgs:
             # "env_configs/nut_assembly/hillclimb/debug_multimodel_franka_robosuite_nut_assembly_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/spill_wipe/hillclimb/debug_multimodel_franka_robosuite_spill_wipe_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/two_arm_lift/hillclimb/debug_multimodel_franka_robosuite_two_arm_lift_multiturn_vdm_reduced_api_skill_lib.yaml",
-            # "env_configs/two_arm_handover/hillclimb/debug_multimodel_franka_robosuite_two_arm_handover_multiturn_vdm_reduced_api_skill_lib.yaml",
+            # "env_configs/two_arm_handover/hillclimb/debug_multimodel_two_arm_handover_multiturn_vdm_reduced_api_skill_lib.yaml",
 
             # ensemble: Hill climb 1 model parallel
             # "env_configs/cube_lifting/hillclimb/ensemble_franka_robosuite_cube_lifting_multiturn_vdm_reduced_api_skill_lib.yaml",
@@ -126,6 +126,15 @@ class BatchLaunchArgs:
             # "env_configs/spill_wipe/hillclimb/debug_ensemble_franka_robosuite_spill_wipe_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/two_arm_lift/hillclimb/debug_ensemble_franka_robosuite_two_arm_lift_multiturn_vdm_reduced_api_skill_lib.yaml",
             # "env_configs/two_arm_handover/hillclimb/debug_ensemble_franka_robosuite_two_arm_handover_multiturn_vdm_reduced_api_skill_lib.yaml",
+
+            # human oracle code
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_cube_lifting_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_cube_stack_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_cube_restack_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_nut_assembly_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_spill_wipe_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/franka_robosuite_two_arm_lift_privileged_oracle.yaml",
+            "env_configs/human_oracle_code/robosuite/two_arm_handover_privileged_oracle.yaml",
         ]
     )
     """List of paths to the YAML configuration files to run sequentially."""

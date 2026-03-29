@@ -353,6 +353,16 @@ class CodeExecutionEnvBase(Env):
             return [f.copy() for f in self.low_level_env._wrist_frame_buffer[start:end]]
         return []
 
+    def get_state_trajectory(self, *, clear: bool = False) -> list[np.ndarray]:
+        if hasattr(self.low_level_env, "get_state_trajectory"):
+            return self.low_level_env.get_state_trajectory(clear=clear)
+        return []
+
+    def get_model_xml(self) -> str | None:
+        if hasattr(self.low_level_env, "get_model_xml"):
+            return self.low_level_env.get_model_xml()
+        return None
+
 
 # Use user's BaseEnv for low-level envs
 

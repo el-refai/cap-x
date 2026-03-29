@@ -21,5 +21,5 @@ api_servers:
 record_video: true
 output_dir: ./outputs/franka_robosuite_nut_assembly_privileged_oracle
 use_oracle_code: true
-trials: 100
-num_workers: 12
+trials: 10
+num_workers: 10

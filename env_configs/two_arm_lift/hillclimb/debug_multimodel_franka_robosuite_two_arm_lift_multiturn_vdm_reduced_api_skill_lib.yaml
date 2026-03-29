@@ -89,7 +89,7 @@ use_multimodel: true
 output_dir: ./outputs/debug_multimodel_franka_robosuite_two_arm_lift_multiturn_vdm_reduced_api_skill_lib
 use_img_differencing: true
 
-trials: 100
-num_workers: 5
+trials: 10
+num_workers: 10
 use_oracle_code: false
 

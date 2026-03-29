@@ -349,6 +349,7 @@ class FrankaRobosuiteCubesRestackLowLevel(RobosuiteBaseEnv):
         )
 
         self._init_robot_links()
+        self._zoom_out_camera(0.8, pitch_deg=10)
         self._init_viser_debug(viser_debug)
 
     def reset(
@@ -358,6 +359,8 @@ class FrankaRobosuiteCubesRestackLowLevel(RobosuiteBaseEnv):
             self._rng = np.random.default_rng(seed)
 
         self.robosuite_env.reset()
+        self._zoom_out_camera(0.8, pitch_deg=10)
+        self._configure_shading()
         # Adjust initial orientation
         self.robosuite_env.sim.data.qpos[6] -= np.pi
 

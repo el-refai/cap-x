@@ -51,9 +51,6 @@ class FrankaRobosuiteNutAssembly(RobosuiteBaseEnv):
             enable_render=enable_render,
         )
 
-        self.save_camera_name = "birdview"
-        self.render_camera_names = [self.save_camera_name]
-
         # Initialize Robosuite environment
         self.privileged = privileged
         if privileged:
@@ -112,6 +109,7 @@ class FrankaRobosuiteNutAssembly(RobosuiteBaseEnv):
         self.nuts = self.robosuite_env.nuts
 
         self._init_robot_links()
+        self._zoom_out_camera(0.8, pitch_deg=10)
 
         # Precompute fast joint qpos addresses for Panda (avoid heavy _get_observations in tight loops)
         joint_names = [f"robot0_joint{i}" for i in range(1, 8)]
@@ -157,6 +155,8 @@ class FrankaRobosuiteNutAssembly(RobosuiteBaseEnv):
             self._rng = np.random.default_rng(seed)
 
         first_obs = self.robosuite_env.reset()
+        self._zoom_out_camera(0.8, pitch_deg=10)
+        self._configure_shading()
         self.home_joint_position = np.array(first_obs["robot0_joint_pos"], dtype=np.float64)
         self.robosuite_env.sim.data.qpos[:7] = np.array(
             [0, -1.585, 0, -2.645, 0, 1, 0.785]

@@ -10,6 +10,7 @@ from __future__ import annotations
 import os
 from typing import Any
 
+import mujoco
 import numpy as np
 import robosuite as suite
 import viser
@@ -45,8 +46,8 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         self.render_camera_names = ["agentview"]  # Scene-level camera for observations
         self.segmentation_level = "instance"
 
-        self._render_width = 512
-        self._render_height = 512
+        self._render_width = 1024
+        self._render_height = 1024
 
         # Initialize Robosuite environment
         # TwoArmLift requires 2 robots
@@ -113,6 +114,16 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         agentview_cam_id = self.robosuite_env.sim.model.camera_name2id("agentview")
         self.robosuite_env.sim.model.cam_pos[agentview_cam_id] = [1.5, 0.0, 2.5]
         self.robosuite_env.sim.model.cam_quat[agentview_cam_id] = [0.653, 0.271, 0.271, 0.653]
+        z_world = np.zeros(3)
+        mujoco.mju_rotVecQuat(z_world, np.array([0.0, 0.0, 1.0]), self.robosuite_env.sim.model.cam_quat[agentview_cam_id])
+        self.robosuite_env.sim.model.cam_pos[agentview_cam_id] += 0.2 * z_world
+
+        # Enable shadows and reflections
+        self.robosuite_env.sim.model._model.vis.quality.shadowsize = 8192
+        ctx = self.robosuite_env.sim._render_context_offscreen
+        if ctx is not None:
+            ctx.scn.flags[mujoco.mjtRndFlag.mjRND_SHADOW] = 1
+            ctx.scn.flags[mujoco.mjtRndFlag.mjRND_REFLECTION] = 1
 
         # State tracking
         self._step_count = 0
@@ -123,6 +134,7 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         self._record_frames = False
         self._frame_buffer: list[np.ndarray] = []
         self._subsample_rate = 4
+        self._state_buffer: list[np.ndarray] = []
 
         # Robot link indices for transforms (robot0 and robot1)
         # Base links are fixed, so we cache their transforms
@@ -183,6 +195,9 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         agentview_cam_id = self.robosuite_env.sim.model.camera_name2id("agentview")
         self.robosuite_env.sim.model.cam_pos[agentview_cam_id] = [1.5, 0.0, 2.5]
         self.robosuite_env.sim.model.cam_quat[agentview_cam_id] = [0.653, 0.271, 0.271, 0.653]
+        z_world = np.zeros(3)
+        mujoco.mju_rotVecQuat(z_world, np.array([0.0, 0.0, 1.0]), self.robosuite_env.sim.model.cam_quat[agentview_cam_id])
+        self.robosuite_env.sim.model.cam_pos[agentview_cam_id] += 0.2 * z_world
 
         self._step_count = 0
         self._sim_step_count = 0
@@ -611,6 +626,7 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         self._record_frames = enabled
         if clear:
             self._frame_buffer.clear()
+            self._state_buffer.clear()
         if enabled:
             self._record_frame()
 
@@ -624,6 +640,10 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
         if not self._record_frames:
             return
 
+        self._state_buffer.append(
+            self.robosuite_env.sim.get_state().flatten()
+        )
+
         frame = self.robosuite_env.sim.render(
             camera_name=self.save_camera_name,
             width=self._render_width,
@@ -631,6 +651,15 @@ class RobosuiteTwoArmLiftEnv(BaseEnv):
             depth=False,
         )
         self._frame_buffer.append(frame[::-1])  # Flip vertically
+
+    def get_state_trajectory(self, *, clear: bool = False) -> list[np.ndarray]:
+        states = list(self._state_buffer)
+        if clear:
+            self._state_buffer.clear()
+        return states
+
+    def get_model_xml(self) -> str:
+        return self.robosuite_env.sim.model.get_xml()
 
     def render(self, mode: str = "rgb_array") -> np.ndarray:  # type: ignore[override]
         if mode != "rgb_array":

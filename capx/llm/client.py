@@ -37,6 +37,7 @@ GPT_MODELS = [
 VLM_MODELS = [
     "google/gemini-3.1-pro-preview",
     "google/gemini-3.1-pro",
+    "gcp/google/gemini-3-pro",
     "google/gemini-2.5-flash-lite",
     "aws/anthropic/claude-opus-4-5",
     "aws/anthropic/claude-haiku-4-5-v1",

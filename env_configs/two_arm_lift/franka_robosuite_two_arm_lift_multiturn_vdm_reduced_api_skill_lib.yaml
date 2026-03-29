@@ -63,6 +63,6 @@ record_video: true
 output_dir: ./outputs/franka_robosuite_two_arm_lift_multiturn_vdm_reduced_api_skill_lib
 use_img_differencing: true
 
-trials: 100
-num_workers: 12
+trials: 5
+num_workers: 5
 use_oracle_code: false

@@ -22,5 +22,5 @@ record_video: true
 output_dir: ./outputs/franka_robosuite_spill_wipe_privileged_oracle
 use_oracle_code: true
 
-trials: 100
+trials: 10
 num_workers: 10

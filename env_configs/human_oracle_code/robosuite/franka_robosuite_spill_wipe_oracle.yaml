@@ -25,6 +25,6 @@ api_servers:
 record_video: true
 output_dir: ./outputs/franka_robosuite_spill_wipe_oracle
 
-trials: 100
-num_workers: 7
+trials: 10
+num_workers: 10
 use_oracle_code: true

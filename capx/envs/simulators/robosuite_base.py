@@ -9,6 +9,7 @@ from __future__ import annotations
 import os
 from typing import Any
 
+import mujoco
 import numpy as np
 import viser
 import viser.extras
@@ -54,8 +55,8 @@ class RobosuiteBaseEnv(BaseEnv):
         self.render_camera_names = [self.save_camera_name]
         self.segmentation_level = "instance"
 
-        self._render_width = 512
-        self._render_height = 512
+        self._render_width = 1024
+        self._render_height = 1024
 
         # State tracking
         self._step_count = 0
@@ -70,12 +71,49 @@ class RobosuiteBaseEnv(BaseEnv):
         self._wrist_camera_name = "robot0_eye_in_hand"
         self._subsample_rate = self._SUBSAMPLE_RATE
 
+        # State trajectory for offline re-rendering (e.g. Isaac Sim)
+        self._state_buffer: list[np.ndarray] = []
+
         # Control state
         self._current_joints = np.zeros(7, dtype=np.float64)
         self._gripper_fraction = 1.0  # 1.0 = open, 0.0 = closed
 
+    def _configure_shading(self) -> None:
+        """Enable shadows and reflections for higher quality rendering."""
+        sim = self.robosuite_env.sim
+        sim.model._model.vis.quality.shadowsize = 8192
+
+        ctx = sim._render_context_offscreen
+        if ctx is not None:
+            ctx.scn.flags[mujoco.mjtRndFlag.mjRND_SHADOW] = 1
+            ctx.scn.flags[mujoco.mjtRndFlag.mjRND_REFLECTION] = 1
+
+    def _zoom_out_camera(self, offset: float = 0.2, pitch_deg: float = 0.0) -> None:
+        """Translate the save camera along its local z-axis and optionally pitch it.
+
+        Args:
+            offset: Distance in meters to pull the camera back (positive = zoom out).
+            pitch_deg: Degrees to pitch the camera around its local x-axis.
+                       Positive = tilt upward (camera looks more downward).
+        """
+        sim = self.robosuite_env.sim
+        cam_id = sim.model.camera_name2id(self.save_camera_name)
+
+        if pitch_deg != 0.0:
+            half = np.deg2rad(pitch_deg) / 2.0
+            pitch_quat = np.array([np.cos(half), np.sin(half), 0.0, 0.0])
+            result = np.zeros(4)
+            mujoco.mju_mulQuat(result, sim.model.cam_quat[cam_id], pitch_quat)
+            sim.model.cam_quat[cam_id] = result
+
+        cam_quat = sim.model.cam_quat[cam_id]
+        z_world = np.zeros(3)
+        mujoco.mju_rotVecQuat(z_world, np.array([0.0, 0.0, 1.0]), cam_quat)
+        sim.model.cam_pos[cam_id] += offset * z_world
+
     def _init_robot_links(self) -> None:
         """Initialize robot link indices and base transforms. Call after robosuite_env is created."""
+        self._configure_shading()
         self.gripper_metric_length = 0.04
         self.base_link_idx = self.robosuite_env.sim.model.body_name2id("fixed_mount0_base")
         self.gripper_link_idx = self.robosuite_env.sim.model.body_name2id("gripper0_right_eef")
@@ -327,6 +365,7 @@ class RobosuiteBaseEnv(BaseEnv):
         if clear:
             self._frame_buffer.clear()
             self._wrist_frame_buffer.clear()
+            self._state_buffer.clear()
         if enabled:
             self._record_frame()
 
@@ -355,6 +394,10 @@ class RobosuiteBaseEnv(BaseEnv):
         if not self._record_frames:
             return
 
+        self._state_buffer.append(
+            self.robosuite_env.sim.get_state().flatten()
+        )
+
         frame = self.robosuite_env.sim.render(
             camera_name=self.save_camera_name,
             width=self._render_width,
@@ -371,6 +414,17 @@ class RobosuiteBaseEnv(BaseEnv):
                 depth=False,
             )
             self._wrist_frame_buffer.append(wrist_frame[::-1])
+
+    def get_state_trajectory(self, *, clear: bool = False) -> list[np.ndarray]:
+        """Return recorded MuJoCo state trajectory for offline re-rendering."""
+        states = list(self._state_buffer)
+        if clear:
+            self._state_buffer.clear()
+        return states
+
+    def get_model_xml(self) -> str:
+        """Return the current MuJoCo model XML for offline replay."""
+        return self.robosuite_env.sim.model.get_xml()
 
     def render(self, mode: str = "rgb_array") -> np.ndarray:  # type: ignore[override]
         if mode != "rgb_array":
