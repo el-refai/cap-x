@@ -88,7 +88,7 @@ source .venv-libero/bin/activate
 CUDA_VISIBLE_DEVICES="" MUJOCO_GL=egl TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD=1 \
     uv run --no-sync --active capx/envs/launch.py \
     --config-path "$TEST_CONFIG" \
-    --model "gcp/google/gemini-3-pro" \
+    --model "google/gemini-3.1-pro-preview" \
     --server-url "http://127.0.0.1:8110/chat/completions"
 
 echo ""

@@ -11,7 +11,7 @@ TRIALS=10
 WORKERS=2
 OUTPUT_DIR="./outputs/experiment_privileged_goal"
 CONFIG_BASE="env_configs/libero_pick_place/franka_libero_pick_place_privileged.yaml"
-MODEL="gcp/google/gemini-3-pro"
+MODEL="google/gemini-3.1-pro-preview"
 SERVER_URL="http://127.0.0.1:8110/chat/completions"
 
 echo "=== Privileged Baseline: $SUITE (Upper Bound Experiment) ==="
