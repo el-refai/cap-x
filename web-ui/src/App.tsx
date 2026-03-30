@@ -132,12 +132,12 @@ function App() {
   return (
     <div className="h-full flex flex-col bg-surface">
       {/* Header */}
-      <header className="flex-shrink-0 bg-surface-raised border-b border-surface-border">
+      <header className="flex-shrink-0 bg-surface-raised border-b border-surface-border header-glow">
         <div className="flex items-center h-16 px-5 gap-5">
           {/* Logo */}
           <div className="flex items-center gap-2.5 flex-shrink-0">
             <img src="/capx_logo.svg" alt="CaP-X" className="w-7 h-7" />
-            <h1 className="text-base font-semibold text-text-primary tracking-wider">CaP-X</h1>
+            <h1 className="text-base font-bold text-text-primary tracking-[0.15em] uppercase">CaP-X</h1>
           </div>
 
           {/* Divider */}
@@ -167,13 +167,14 @@ function App() {
               <div className={`w-1.5 h-1.5 rounded-full ${
                 trial.isConnected
                   ? isRunning
-                    ? 'bg-accent animate-glow-pulse'
+                    ? 'bg-accent animate-pulse'
                     : 'bg-nv-green'
                   : 'bg-text-tertiary'
               }`} />
               <span className="text-xs text-text-secondary font-medium tracking-wide">
                 {isRunning ? 'Running' : trial.isConnected ? 'Ready' : 'Offline'}
               </span>
+              {isRunning && <div className="w-12 h-0.5 rounded-full bg-accent/30 overflow-hidden"><div className="h-full w-1/2 bg-accent rounded-full animate-[slideIn_1s_ease-in-out_infinite_alternate]" /></div>}
             </div>
 
             {/* Settings Gear */}
@@ -326,8 +327,8 @@ function App() {
 
         {/* Draggable Divider */}
         <div
-          className={`flex-shrink-0 w-px cursor-col-resize relative group z-30 transition-colors duration-150 ${
-            isDragging ? 'bg-accent' : 'bg-surface-border hover:bg-accent/50'
+          className={`flex-shrink-0 w-0.5 cursor-col-resize relative group z-30 transition-colors duration-150 ${
+            isDragging ? 'bg-accent gold-rule' : 'bg-surface-border hover:bg-accent/50'
           }`}
           onMouseDown={handleMouseDown}
         >

@@ -40,14 +40,14 @@ export function CodeBlock({ code, language = 'python', compact = false, collapsi
     return (
       <div className="relative">
         <div
-          className="relative bg-surface-sunken border border-surface-border border-t-accent/10 rounded-md cursor-pointer hover:border-surface-border-light transition-all overflow-hidden"
+          className="relative bg-surface-sunken border border-surface-border border-t-2 border-t-accent/20 rounded-md cursor-pointer hover:border-surface-border-light transition-all overflow-hidden"
           onClick={() => setIsCollapsed(false)}
           onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsCollapsed(false); } }}
           role="button"
           tabIndex={0}
         >
           {language && (
-            <span className="absolute top-2 left-3 text-xs text-text-muted uppercase tracking-wider select-none z-10">
+            <span className="absolute top-2 left-3 text-xs text-accent/40 uppercase tracking-wider select-none z-10">
               {language}
             </span>
           )}
@@ -79,9 +79,9 @@ export function CodeBlock({ code, language = 'python', compact = false, collapsi
 
   return (
     <div className="relative">
-      <div className="relative bg-surface-sunken border border-surface-border border-t-accent/10 rounded-md overflow-hidden">
+      <div className="relative bg-surface-sunken border border-surface-border border-t-2 border-t-accent/20 rounded-md overflow-hidden">
         {language && (
-          <span className="absolute top-2 left-3 text-xs text-text-muted uppercase tracking-wider select-none z-10">
+          <span className="absolute top-2 left-3 text-xs text-accent/40 uppercase tracking-wider select-none z-10">
             {language}
           </span>
         )}

@@ -140,7 +140,7 @@ export function ConfigStartControl({
       {canStart && configPath && !loading && (
         <button
           onClick={state === 'complete' || state === 'error' ? handleNewTrial : handleStart}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-accent text-black rounded-md text-sm font-semibold hover:bg-accent-light disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/10"
+          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-accent text-black rounded-md text-sm font-bold tracking-wide hover:bg-accent-light hover:shadow-accent/30 active:scale-[0.98] transform disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/20"
         >
           {state === 'complete' ? (
             <>

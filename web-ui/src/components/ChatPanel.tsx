@@ -47,7 +47,7 @@ export function ChatPanel({
             className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-surface-overlay/50 transition-colors"
           >
             <div className="flex items-center gap-2.5">
-              <div className="w-5 h-5 rounded bg-accent/5 flex items-center justify-center">
+              <div className="w-6 h-6 rounded bg-accent/10 border border-accent/20 flex items-center justify-center">
                 <svg className="w-3.5 h-3.5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
@@ -93,27 +93,31 @@ export function ChatPanel({
         aria-live="polite"
       >
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-center py-12">
-            {/* Logo */}
-            <img src="/capx_logo.svg" alt="CaP-X" className="w-12 h-12 mb-5 opacity-60" />
+          <div className="flex flex-col items-center justify-center h-full text-center">
+            {/* Large logo with subtle glow */}
+            <div className="relative mb-8">
+              <div className="absolute inset-0 blur-2xl bg-accent/5 rounded-full scale-150" />
+              <img src="/capx_logo.svg" alt="CaP-X" className="w-16 h-16 relative" />
+            </div>
 
-            {/* Brand title */}
-            <h2 className="text-xl font-semibold text-text-primary tracking-[0.15em] mb-1">CaP-X</h2>
-            <p className="text-xs text-text-tertiary mb-8 tracking-wide">Code-as-Policy Agent Framework</p>
+            {/* Title — large, tracked, uppercase */}
+            <h2 className="text-display font-bold text-text-primary tracking-[0.2em] uppercase mb-2">CaP-X</h2>
+            <div className="gold-rule w-16 mx-auto mb-4" />
+            <p className="text-sm text-text-tertiary tracking-wide mb-12">Code-as-Policy Agent Framework</p>
 
-            {/* Steps */}
-            <div className="flex flex-col gap-3 text-left w-full max-w-[240px]">
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">01</span>
-                <span className="text-sm text-text-secondary">Select a config</span>
+            {/* Steps — minimal, spaced */}
+            <div className="flex flex-col gap-4 text-left">
+              <div className="flex items-center gap-4 group">
+                <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">01</span>
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Select a configuration</span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">02</span>
-                <span className="text-sm text-text-secondary">Start a trial</span>
+              <div className="flex items-center gap-4 group">
+                <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">02</span>
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Start a trial</span>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">03</span>
-                <span className="text-sm text-text-secondary">Watch the agent code</span>
+              <div className="flex items-center gap-4 group">
+                <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">03</span>
+                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Watch the agent write code</span>
               </div>
             </div>
           </div>

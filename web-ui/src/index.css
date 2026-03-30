@@ -116,6 +116,22 @@ details[open] summary::before {
   100% { opacity: 1; }
 }
 
+/* Subtle noise texture for depth */
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Gold accent line — used as visual punctuation */
+.gold-rule {
+  height: 2px;
+  background: linear-gradient(90deg, #D4A017, transparent);
+}
+
+/* Header bottom edge glow */
+.header-glow {
+  box-shadow: 0 1px 0 0 rgba(212, 160, 23, 0.15), 0 4px 12px -4px rgba(0, 0, 0, 0.5);
+}
+
 /* Gold gradient text utility */
 .text-gold-gradient {
   background: linear-gradient(135deg, #D4A017, #F0C040);
