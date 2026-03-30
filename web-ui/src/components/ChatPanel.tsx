@@ -92,25 +92,25 @@ export function ChatPanel({
       >
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-center py-12">
-            {/* Gold accent bar */}
-            <div className="w-10 h-0.5 bg-[#D4A017] rounded-full mb-6" />
+            {/* Logo */}
+            <img src="/capx_logo.svg" alt="CaP-X" className="w-12 h-12 mb-5 opacity-60" />
 
             {/* Brand title */}
-            <h2 className="text-2xl font-semibold text-[#E8E8E8] tracking-[0.2em] mb-1">CaP-X</h2>
-            <p className="text-sm text-text-secondary mb-8">Code-as-Policy Agent Framework</p>
+            <h2 className="text-xl font-semibold text-text-primary tracking-[0.15em] mb-1">CaP-X</h2>
+            <p className="text-xs text-text-tertiary mb-8 tracking-wide">Code-as-Policy Agent Framework</p>
 
             {/* Steps */}
-            <div className="flex flex-col gap-3 text-left w-full max-w-[220px]">
+            <div className="flex flex-col gap-3 text-left w-full max-w-[240px]">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-medium text-[#D4A017] w-4 shrink-0">1.</span>
+                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">01</span>
                 <span className="text-sm text-text-secondary">Select a config</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs font-medium text-[#D4A017] w-4 shrink-0">2.</span>
+                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">02</span>
                 <span className="text-sm text-text-secondary">Start a trial</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs font-medium text-[#D4A017] w-4 shrink-0">3.</span>
+                <span className="text-[10px] font-semibold text-accent tabular-nums w-4 shrink-0">03</span>
                 <span className="text-sm text-text-secondary">Watch the agent code</span>
               </div>
             </div>

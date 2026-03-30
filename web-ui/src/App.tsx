@@ -135,10 +135,8 @@ function App() {
       <header className="flex-shrink-0 bg-surface-raised border-b border-surface-border">
         <div className="flex items-center h-16 px-5 gap-5">
           {/* Logo */}
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <div className="w-7 h-7 rounded-md bg-accent/10 border border-accent/20 flex items-center justify-center">
-              <span className="text-accent font-bold text-xs">CX</span>
-            </div>
+          <div className="flex items-center gap-2.5 flex-shrink-0">
+            <img src="/capx_logo.svg" alt="CaP-X" className="w-7 h-7" />
             <span className="text-base font-semibold text-text-primary tracking-wider">CaP-X</span>
           </div>
 
