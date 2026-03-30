@@ -42,14 +42,14 @@ function GeneratingMessage({ message, timestamp }: { message: ChatMessage; times
         <div className="flex items-center gap-2 text-xs text-text-tertiary mb-2 flex-wrap">
           <span>{timestamp}</span>
           {message.turnNumber !== undefined && message.turnNumber > 0 && (
-            <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent text-xs font-medium">
+            <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent text-xs font-display font-medium">
               Turn {message.turnNumber}
             </span>
           )}
           {message.modelUsed && (
             <span className="text-text-tertiary">{message.modelUsed}</span>
           )}
-          <span className="text-accent flex items-center gap-1">
+          <span className="text-accent font-display flex items-center gap-1">
             {message.isStreaming ? (
               <>
                 <span className="inline-block w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
@@ -74,7 +74,7 @@ function GeneratingMessage({ message, timestamp }: { message: ChatMessage; times
               <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
-              <span className="font-medium">{message.isStreaming ? 'Thinking...' : 'Reasoning'}</span>
+              <span className="font-display font-medium">{message.isStreaming ? 'Thinking...' : 'Reasoning'}</span>
               {!message.isStreaming && (
                 <span className="text-text-tertiary">({streamingReasoning.split(/\s+/).length} words)</span>
               )}
@@ -187,7 +187,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
             </svg>
           </div>
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-accent animate-pulse font-medium">Thinking...</span>
+            <span className="text-accent animate-pulse font-display font-medium">Thinking...</span>
             <span className="text-text-tertiary text-xs">
               ({message.thinkingPhase === 'initial' ? 'generating code' : 'evaluating'})
             </span>
@@ -241,7 +241,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
             <div className="flex items-center gap-2 text-xs text-text-tertiary uppercase tracking-wider mb-2 flex-wrap">
               <span className="normal-case tracking-normal text-text-muted">{timestamp}</span>
               {message.decision && (
-                <span className={`px-1.5 py-0.5 rounded text-xs font-medium normal-case tracking-normal ${
+                <span className={`px-1.5 py-0.5 rounded text-xs font-display font-medium normal-case tracking-normal ${
                   message.decision === 'finish'
                     ? 'bg-nv-green/10 text-nv-green border border-nv-green/20'
                     : message.decision === 'regenerate'
@@ -298,13 +298,13 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 text-xs text-text-tertiary uppercase tracking-wider mb-1.5">
               <span className="font-mono text-accent">$</span>
-              <span>Block {(message.blockIndex ?? 0) + 1}</span>
+              <span className="font-display">Block {(message.blockIndex ?? 0) + 1}</span>
               {message.isExecuting ? (
-                <span className="text-accent font-medium normal-case tracking-normal">Running...</span>
+                <span className="text-accent font-display font-medium normal-case tracking-normal">Running...</span>
               ) : message.success ? (
-                <span className="text-nv-green font-medium normal-case tracking-normal">Completed</span>
+                <span className="text-nv-green font-display font-medium normal-case tracking-normal">Completed</span>
               ) : (
-                <span className="text-red-400 font-medium normal-case tracking-normal">Failed</span>
+                <span className="text-red-400 font-display font-medium normal-case tracking-normal">Failed</span>
               )}
               <span className="text-text-muted normal-case tracking-normal">{timestamp}</span>
             </div>
@@ -324,7 +324,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
               <div className="space-y-2 mt-2">
                 {message.stdout && (
                   <div className="text-xs">
-                    <div className="text-xs text-text-tertiary uppercase tracking-wider font-medium mb-1">stdout</div>
+                    <div className="text-xs text-text-tertiary uppercase tracking-wider font-display font-medium mb-1">stdout</div>
                     <pre className="bg-surface-sunken p-3 rounded-lg text-text-secondary overflow-x-auto font-mono text-xs whitespace-pre-wrap max-h-48 overflow-y-auto border border-surface-border">
                       {message.stdout}
                     </pre>
@@ -332,7 +332,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
                 )}
                 {message.stderr && (
                   <div className="text-xs">
-                    <div className="text-red-400 font-medium mb-1">stderr</div>
+                    <div className="text-red-400 font-display font-medium mb-1">stderr</div>
                     <pre className="bg-red-950/30 p-3 rounded-lg text-red-400 overflow-x-auto font-mono text-xs whitespace-pre-wrap max-h-48 overflow-y-auto border border-red-800/20">
                       {message.stderr}
                     </pre>
@@ -381,7 +381,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 text-xs text-text-tertiary uppercase tracking-wider mb-2 flex-wrap">
               <span className="normal-case tracking-normal text-text-muted">{timestamp}</span>
-              <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20 font-medium normal-case tracking-normal">
+              <span className="px-1.5 py-0.5 rounded bg-accent/10 text-accent border border-accent/20 font-display font-medium normal-case tracking-normal">
                 {message.analysisType === 'state_comparison' ? 'State Comparison' : 'Initial Description'}
               </span>
               {message.modelUsed && (
@@ -428,7 +428,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
               </svg>
             </div>
             <div>
-              <div className={`font-bold text-sm ${isSuccess ? 'text-nv-green' : 'text-red-400'}`}>
+              <div className={`font-display font-bold text-sm ${isSuccess ? 'text-nv-green' : 'text-red-400'}`}>
                 {isSuccess ? 'Trial Completed Successfully' : 'Trial Failed'}
               </div>
               <div className="text-xs text-text-tertiary mt-0.5">
@@ -463,7 +463,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
               </svg>
             </div>
             <div>
-              <div className="font-bold text-sm text-red-400">Error</div>
+              <div className="font-display font-bold text-sm text-red-400">Error</div>
               <div className="text-sm text-red-400">{message.error}</div>
             </div>
           </div>

@@ -137,7 +137,7 @@ function App() {
           {/* Logo */}
           <div className="flex items-center gap-2.5 flex-shrink-0">
             <img src="/capx_logo.svg" alt="CaP-X" className="w-7 h-7" />
-            <h1 className="text-base font-bold text-text-primary tracking-widest uppercase">CaP-X</h1>
+            <h1 className="text-base font-bold font-display text-text-primary tracking-widest uppercase">CaP-X</h1>
           </div>
 
           {/* Divider */}
@@ -171,7 +171,7 @@ function App() {
                     : 'bg-nv-green'
                   : 'bg-text-tertiary'
               }`} />
-              <span className="text-xs text-text-secondary font-medium tracking-wide">
+              <span className="text-xs text-text-secondary font-display font-medium tracking-wide">
                 {isRunning ? 'Running' : trial.isConnected ? 'Ready' : 'Offline'}
               </span>
               {isRunning && <div className="w-12 h-0.5 rounded-full bg-accent/30 overflow-hidden"><div className="h-full w-1/2 bg-accent rounded-full animate-[slideIn_1s_ease-in-out_infinite_alternate]" /></div>}
@@ -199,7 +199,7 @@ function App() {
             {showSettings && (
               <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-surface-raised rounded-lg shadow-2xl border border-surface-border-light z-50 animate-scale-in">
                 <div className="px-5 py-3.5 border-b border-surface-border flex items-center justify-between">
-                  <h3 className="text-sm font-bold text-text-primary tracking-wide">Settings</h3>
+                  <h3 className="text-sm font-bold font-display text-text-primary tracking-wide">Settings</h3>
                   <button
                     onClick={() => setShowSettings(false)}
                     className="p-2 text-text-tertiary hover:text-text-primary rounded transition-colors"
@@ -213,7 +213,7 @@ function App() {
                 <div className="p-5 space-y-5">
                   {/* Model */}
                   <div>
-                    <label htmlFor="settings-model" className="block text-xs font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Model</label>
+                    <label htmlFor="settings-model" className="block text-xs font-display font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Model</label>
                     <select
                       id="settings-model"
                       value={model}
@@ -249,7 +249,7 @@ function App() {
 
                   {/* Server URL */}
                   <div>
-                    <label htmlFor="settings-server-url" className="block text-xs font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Server URL</label>
+                    <label htmlFor="settings-server-url" className="block text-xs font-display font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Server URL</label>
                     <input
                       id="settings-server-url"
                       type="text"
@@ -262,7 +262,7 @@ function App() {
 
                   {/* Temperature */}
                   <div>
-                    <label htmlFor="settings-temperature" className="block text-xs font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Temperature</label>
+                    <label htmlFor="settings-temperature" className="block text-xs font-display font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Temperature</label>
                     <input
                       id="settings-temperature"
                       type="number"
@@ -294,7 +294,7 @@ function App() {
                       <div className="w-8 h-4.5 bg-surface-border rounded-full peer-checked:bg-accent/80 transition-colors" />
                       <div className="absolute top-0.5 left-0.5 w-3.5 h-3.5 bg-text-secondary rounded-full peer-checked:translate-x-3.5 peer-checked:bg-white transition-all" />
                     </div>
-                    <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">
+                    <span className="text-sm font-display text-text-secondary group-hover:text-text-primary transition-colors">
                       Pause each turn for feedback
                     </span>
                   </label>

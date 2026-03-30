@@ -52,10 +52,10 @@ export function ChatPanel({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                 </svg>
               </div>
-              <span className="text-xs font-semibold text-accent uppercase tracking-wide">Task</span>
+              <span className="text-xs font-display font-semibold text-accent uppercase tracking-wide">Task</span>
             </div>
             {needsExpansion && (
-              <span className="flex items-center gap-1 text-xs text-text-tertiary">
+              <span className="flex items-center gap-1 text-xs font-display text-text-tertiary">
                 {taskExpanded ? 'Collapse' : 'Expand'}
                 <svg className={`w-3.5 h-3.5 transition-transform ${taskExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -101,23 +101,23 @@ export function ChatPanel({
             </div>
 
             {/* Title — large, tracked, uppercase */}
-            <h2 className="text-display font-bold text-text-primary tracking-widest uppercase mb-2">CaP-X</h2>
+            <h2 className="text-display font-bold font-display text-text-primary tracking-widest uppercase mb-2">CaP-X</h2>
             <div className="gold-rule w-16 mx-auto mb-4" />
-            <p className="text-sm text-text-tertiary tracking-wide mb-12">Code-as-Policy Agent Framework</p>
+            <p className="text-sm font-display text-text-tertiary tracking-wide mb-12">Code-as-Policy Agent Framework</p>
 
             {/* Steps — minimal, spaced */}
             <div className="flex flex-col gap-4 text-left">
               <div className="flex items-center gap-4 group">
                 <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">01</span>
-                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Select a configuration</span>
+                <span className="text-sm font-display text-text-secondary group-hover:text-text-primary transition-colors">Select a configuration</span>
               </div>
               <div className="flex items-center gap-4 group">
                 <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">02</span>
-                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Start a trial</span>
+                <span className="text-sm font-display text-text-secondary group-hover:text-text-primary transition-colors">Start a trial</span>
               </div>
               <div className="flex items-center gap-4 group">
                 <span className="text-[11px] font-mono font-bold text-accent/50 group-hover:text-accent transition-colors w-6">03</span>
-                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors">Watch the agent write code</span>
+                <span className="text-sm font-display text-text-secondary group-hover:text-text-primary transition-colors">Watch the agent write code</span>
               </div>
             </div>
           </div>

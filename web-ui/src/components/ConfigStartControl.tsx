@@ -140,7 +140,7 @@ export function ConfigStartControl({
       {canStart && configPath && !loading && (
         <button
           onClick={state === 'complete' || state === 'error' ? handleNewTrial : handleStart}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-accent text-black rounded-md text-sm font-bold tracking-wide hover:bg-accent-light hover:shadow-accent/30 active:scale-[0.98] transform disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/20"
+          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-accent text-black rounded-md text-sm font-display font-bold tracking-wide hover:bg-accent-light hover:shadow-accent/30 active:scale-[0.98] transform disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-lg shadow-accent/20"
         >
           {state === 'complete' ? (
             <>
@@ -170,7 +170,7 @@ export function ConfigStartControl({
       {isRunning && (
         <button
           onClick={stopTrial}
-          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-red-600/80 text-white border border-red-500/30 rounded-md text-sm font-medium hover:bg-red-600 transition-colors shadow-sm"
+          className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-red-600/80 text-white border border-red-500/30 rounded-md text-sm font-display font-medium hover:bg-red-600 transition-colors shadow-sm"
         >
           <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd" />
@@ -198,7 +198,7 @@ export function ConfigStartControl({
           <svg className="w-3.5 h-3.5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <span className="text-xs text-red-400 max-w-[200px] truncate">{error}</span>
+          <span className="text-xs font-display text-red-400 max-w-[200px] truncate">{error}</span>
         </div>
       )}
     </div>
