@@ -12,6 +12,7 @@ function App() {
   const [serverUrl, setServerUrl] = useState('http://127.0.0.1:8110/chat/completions');
   const [temperature, setTemperature] = useState(1.0);
   const [awaitUserInput, setAwaitUserInput] = useState(true);
+  const [executionTimeout, setExecutionTimeout] = useState(180);
   const [hasCheckedSession, setHasCheckedSession] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
@@ -82,6 +83,7 @@ function App() {
         server_url: serverUrl,
         temperature,
         await_user_input_each_turn: awaitUserInput,
+        execution_timeout: executionTimeout,
       });
     }
   }, [trial.configPath, trial.state, hasCheckedSession]);
@@ -272,6 +274,22 @@ function App() {
                       min="0"
                       max="2"
                       step="0.1"
+                      className="w-24 px-3 py-2 bg-surface-sunken border border-surface-border rounded-md text-sm text-text-primary font-mono focus:outline-none focus:ring-1 focus:ring-accent/40 focus:border-accent/40 disabled:opacity-40 transition-all"
+                    />
+                  </div>
+
+                  {/* Execution Timeout */}
+                  <div>
+                    <label htmlFor="settings-timeout" className="block text-xs font-medium font-display text-text-secondary mb-1.5 tracking-wide uppercase">Execution Timeout (s)</label>
+                    <input
+                      id="settings-timeout"
+                      type="number"
+                      value={executionTimeout}
+                      onChange={(e) => setExecutionTimeout(parseInt(e.target.value) || 180)}
+                      disabled={isRunning}
+                      min="30"
+                      max="600"
+                      step="30"
                       className="w-24 px-3 py-2 bg-surface-sunken border border-surface-border rounded-md text-sm text-text-primary font-mono focus:outline-none focus:ring-1 focus:ring-accent/40 focus:border-accent/40 disabled:opacity-40 transition-all"
                     />
                   </div>
