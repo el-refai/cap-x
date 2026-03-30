@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import hljs from 'highlight.js/lib/core';
 import python from 'highlight.js/lib/languages/python';
-import 'highlight.js/styles/github-dark.css';
+// Custom syntax theme in index.css — no base theme import needed
 
 hljs.registerLanguage('python', python);
 
