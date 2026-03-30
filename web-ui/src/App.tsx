@@ -197,7 +197,7 @@ function App() {
 
             {/* Settings Popover */}
             {showSettings && (
-              <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-surface-raised rounded-lg shadow-2xl border border-surface-border-light z-50 animate-fade-in">
+              <div className="absolute right-0 top-full mt-2 w-[calc(100vw-2rem)] sm:w-96 bg-surface-raised rounded-lg shadow-2xl border border-surface-border-light z-50 animate-scale-in">
                 <div className="px-4 py-3 border-b border-surface-border flex items-center justify-between">
                   <h3 className="text-sm font-semibold text-text-primary tracking-wide">Settings</h3>
                   <button

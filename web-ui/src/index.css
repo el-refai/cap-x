@@ -95,21 +95,7 @@ details[open] summary::before {
   transform: rotate(90deg);
 }
 
-/* Fade-in animation for messages */
-.msg-enter {
-  animation: msgFadeIn 0.3s ease-out;
-}
-
-@keyframes msgFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Message entrance — defined at end of file */
 
 @keyframes fadeIn {
   0% { opacity: 0; }
@@ -169,4 +155,79 @@ details[open] summary::before {
 ::selection {
   background: rgba(212, 160, 23, 0.3);
   color: #ffffff;
+}
+
+/* ============================================
+   Reduced motion: respect user preferences
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   Message entrance choreography
+   ============================================ */
+.msg-enter {
+  animation: msgSlideIn 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes msgSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) translateX(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* User messages slide from right */
+.msg-enter-right {
+  animation: msgSlideInRight 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes msgSlideInRight {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) translateX(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+  }
+}
+
+/* Smooth height expand for code blocks and sections */
+.expand-enter {
+  animation: smoothExpand 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+}
+
+@keyframes smoothExpand {
+  0% {
+    opacity: 0;
+    max-height: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 600px;
+  }
+}
+
+/* Typing cursor blink — more refined than animate-pulse */
+.cursor-blink {
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }

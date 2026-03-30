@@ -84,7 +84,7 @@ function GeneratingMessage({ message, timestamp }: { message: ChatMessage; times
               <div className="mt-2 ml-5 pl-3 border-l-2 border-accent/20 bg-surface-raised/50 rounded-r-lg p-3">
                 <div className="text-sm text-text-secondary leading-relaxed prose prose-sm max-w-none prose-invert">
                   <ReactMarkdown>{streamingReasoning}</ReactMarkdown>
-                  {message.isStreaming && <span className="inline-block w-2 h-4 bg-accent animate-pulse ml-0.5 rounded-sm" />}
+                  {message.isStreaming && <span className="inline-block w-2 h-4 bg-accent cursor-blink ml-0.5 rounded-sm" />}
                 </div>
               </div>
             )}
@@ -95,7 +95,7 @@ function GeneratingMessage({ message, timestamp }: { message: ChatMessage; times
         {streamingContent ? (
           <div className="text-sm text-text-primary prose prose-sm max-w-none prose-invert">
             <ReactMarkdown>{streamingContent}</ReactMarkdown>
-            {message.isStreaming && <span className="inline-block w-2 h-4 bg-accent animate-pulse ml-0.5 rounded-sm" />}
+            {message.isStreaming && <span className="inline-block w-2 h-4 bg-accent cursor-blink ml-0.5 rounded-sm" />}
           </div>
         ) : message.isStreaming ? (
           <div className="text-sm text-text-tertiary">
@@ -397,7 +397,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
 
     case 'user_prompt':
       return (
-        <div className="flex items-start gap-3 justify-end msg-enter">
+        <div className="flex items-start gap-3 justify-end msg-enter-right">
           <div className="max-w-[90%] sm:max-w-[70%]">
             <div className="text-xs text-text-muted mb-1 text-right">{timestamp}</div>
             <div className="bg-accent/8 border border-accent/15 text-text-primary rounded-xl rounded-br-sm px-4 py-3 text-sm break-words">
@@ -410,7 +410,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
     case 'completion': {
       const isSuccess = Boolean(message.success);
       return (
-        <div className={`p-4 rounded-lg border msg-enter ${
+        <div className={`p-4 rounded-lg border msg-enter animate-scale-in ${
           isSuccess
             ? 'bg-nv-green/5 border-nv-green/20'
             : 'bg-red-950/30 border-red-800/20'
@@ -455,7 +455,7 @@ export function ChatMessageComponent({ message }: ChatMessageComponentProps) {
 
     case 'error':
       return (
-        <div className="bg-red-950/30 border border-red-800/20 rounded-xl p-4 msg-enter">
+        <div className="bg-red-950/30 border border-red-800/20 rounded-xl p-4 msg-enter animate-scale-in">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center">
               <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
