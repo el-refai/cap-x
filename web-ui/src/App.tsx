@@ -369,7 +369,7 @@ function App() {
           className="flex flex-col bg-surface-raised overflow-hidden"
           style={{ width: `${100 - splitPercent}%` }}
         >
-          <VisualizationPanel />
+          <VisualizationPanel trialState={trial.state} />
         </div>
       </main>
     </div>

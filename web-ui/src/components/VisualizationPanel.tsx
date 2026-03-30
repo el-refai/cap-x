@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import type { SessionState } from '../types/messages';
 
 /**
  * Default Viser URL — goes through the FastAPI reverse proxy so only one
@@ -6,7 +7,11 @@ import { useState, useEffect, useRef } from 'react';
  */
 const DEFAULT_VISER_URL = '/viser-proxy/';
 
-export function VisualizationPanel() {
+interface VisualizationPanelProps {
+  trialState?: SessionState;
+}
+
+export function VisualizationPanel({ trialState }: VisualizationPanelProps) {
   const [viserUrl, setViserUrl] = useState(DEFAULT_VISER_URL);
   const [isEditing, setIsEditing] = useState(false);
   const [tempUrl, setTempUrl] = useState(viserUrl);
@@ -24,7 +29,22 @@ export function VisualizationPanel() {
     setRetryCount(0);
   };
 
-  // Poll the viser proxy every 3s.
+  // When a new trial starts, reset connection tracking so the iframe reloads
+  // to connect to the new Viser instance
+  const prevTrialState = useRef(trialState);
+  useEffect(() => {
+    if (trialState === 'running' && prevTrialState.current !== 'running') {
+      wasConnectedRef.current = false;
+      hasEverConnectedRef.current = false;
+      setConnectionStatus('connecting');
+      setHasEverConnected(false);
+      // Small delay then reload — gives the new Viser server time to start
+      setTimeout(() => setRetryCount(c => c + 1), 1500);
+    }
+    prevTrialState.current = trialState;
+  }, [trialState]);
+
+  // Poll the viser proxy.
   const wasConnectedRef = useRef(false);
   const hasEverConnectedRef = useRef(false);
 
