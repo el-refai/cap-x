@@ -167,7 +167,12 @@ def _ensure_frontend_built() -> None:
             nodeenv_bin = shutil.which("nodeenv")
             if nodeenv_bin is None:
                 raise RuntimeError("Could not install nodeenv. Install Node.js manually.")
-        subprocess.check_call([nodeenv_bin, "--prebuilt", "--node=20.18.1", str(nodeenv_dir)])
+        nodeenv_cmd = [nodeenv_bin, "--prebuilt", "--node=20.18.1"]
+        # nodeenv exits with code 2 if the target directory already exists,
+        # which can happen after an interrupted install.
+        if nodeenv_dir.exists():
+            nodeenv_cmd.append("--force")
+        subprocess.check_call([*nodeenv_cmd, str(nodeenv_dir)])
 
     env = {**os.environ, "PATH": f"{nodeenv_dir / 'bin'}:{os.environ.get('PATH', '')}"}
     node_modules = webui_dir / "node_modules"
