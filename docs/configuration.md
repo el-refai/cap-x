@@ -18,7 +18,7 @@ uv run --no-sync --active capx/envs/launch.py \
 | Flag                | Default                                  | Description                           |
 | ------------------- | ---------------------------------------- | ------------------------------------- |
 | `--config-path`     | *(required)*                             | Path to YAML task config              |
-| `--model`           | `google/gemini-3.1-pro-preview`        | Model name                            |
+| `--model`           | `google/gemini-3.1-pro-preview`          | Model name                            |
 | `--server-url`      | `http://127.0.0.1:8110/chat/completions` | LLM endpoint                          |
 | `--temperature`     | `1.0`                                    | Sampling temperature                  |
 | `--total-trials`    | from YAML                                | Number of evaluation trials           |
@@ -97,17 +97,12 @@ CaP-X queries language models through a local proxy server that exposes an OpenA
    ```bash
    echo "sk-or-v1-your-key-here" > .openrouterkey
    ```
-3. Start the proxy:
+3. Start the proxy (supports automatic key rotation across multiple keys):
    ```bash
    uv run --no-sync --active capx/serving/openrouter_server.py --key-file .openrouterkey --port 8110
    ```
 
 OpenRouter provides access to Gemini, GPT, Claude, DeepSeek, Qwen, and other models through a single API key.
-
-3. Start the proxy (supports automatic key rotation across multiple keys):
-   ```bash
-   uv run --no-sync --active capx/serving/openrouter_server.py --key-file .openrouterkey --port 8110
-   ```
 
 ### Option B: vLLM (local models)
 
