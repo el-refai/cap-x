@@ -162,8 +162,40 @@ function App() {
             />
           </div>
 
-          {/* Right side: settings + status */}
+          {/* Right side: model selector + status + settings */}
           <div className="flex items-center gap-3 flex-shrink-0">
+            {/* Model selector — always visible */}
+            <select
+              value={model}
+              onChange={(e) => setModel(e.target.value)}
+              disabled={isRunning}
+              className="appearance-none pl-3 pr-7 py-1.5 bg-surface-sunken border border-surface-border rounded-md text-xs font-display text-text-primary focus:outline-none focus:ring-1 focus:ring-accent/40 focus:border-accent/40 disabled:opacity-40 transition-all cursor-pointer"
+            >
+              <optgroup label="Google">
+                <option value="google/gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
+                <option value="google/gemini-3.1-pro">Gemini 3.1 Pro</option>
+                <option value="google/gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
+              </optgroup>
+              <optgroup label="Anthropic">
+                <option value="anthropic/claude-opus-4-5">Claude Opus 4.5</option>
+                <option value="anthropic/claude-sonnet-4">Claude Sonnet 4</option>
+                <option value="anthropic/claude-haiku-4-5">Claude Haiku 4.5</option>
+              </optgroup>
+              <optgroup label="OpenAI">
+                <option value="openai/gpt-5.2">GPT 5.2</option>
+                <option value="openai/gpt-5.1">GPT 5.1</option>
+                <option value="openai/gpt-5.1-codex">GPT 5.1 Codex</option>
+                <option value="openai/o4-mini">O4 Mini</option>
+                <option value="openai/o1">O1</option>
+              </optgroup>
+              <optgroup label="Open Source">
+                <option value="deepseek/deepseek-v3-0324">DeepSeek V3</option>
+                <option value="deepseek/deepseek-r1-0528">DeepSeek R1</option>
+                <option value="qwen/qwen-235b-a22b">Qwen 235B</option>
+                <option value="moonshotai/kimi-k2-instruct">Kimi K2</option>
+              </optgroup>
+            </select>
+
             {/* Status indicator */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-surface-overlay border border-surface-border">
               <div className={`w-1.5 h-1.5 rounded-full ${
@@ -213,42 +245,6 @@ function App() {
                   </button>
                 </div>
                 <div className="p-5 space-y-5">
-                  {/* Model */}
-                  <div>
-                    <label htmlFor="settings-model" className="block text-xs font-display font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Model</label>
-                    <select
-                      id="settings-model"
-                      value={model}
-                      onChange={(e) => setModel(e.target.value)}
-                      disabled={isRunning}
-                      className="w-full px-3 py-2 bg-surface-sunken border border-surface-border rounded-md text-sm text-text-primary focus:outline-none focus:ring-1 focus:ring-accent/40 focus:border-accent/40 disabled:opacity-40 transition-all cursor-pointer"
-                    >
-                      <optgroup label="Google">
-                        <option value="google/gemini-3.1-pro-preview">Gemini 3.1 Pro Preview</option>
-                        <option value="google/gemini-3.1-pro">Gemini 3.1 Pro</option>
-                        <option value="google/gemini-2.5-flash-lite">Gemini 2.5 Flash Lite</option>
-                      </optgroup>
-                      <optgroup label="Anthropic">
-                        <option value="anthropic/claude-opus-4-5">Claude Opus 4.5</option>
-                        <option value="anthropic/claude-sonnet-4">Claude Sonnet 4</option>
-                        <option value="anthropic/claude-haiku-4-5">Claude Haiku 4.5</option>
-                      </optgroup>
-                      <optgroup label="OpenAI">
-                        <option value="openai/gpt-5.2">GPT 5.2</option>
-                        <option value="openai/gpt-5.1">GPT 5.1</option>
-                        <option value="openai/gpt-5.1-codex">GPT 5.1 Codex</option>
-                        <option value="openai/o4-mini">O4 Mini</option>
-                        <option value="openai/o1">O1</option>
-                      </optgroup>
-                      <optgroup label="Open Source">
-                        <option value="deepseek/deepseek-v3-0324">DeepSeek V3</option>
-                        <option value="deepseek/deepseek-r1-0528">DeepSeek R1</option>
-                        <option value="qwen/qwen-235b-a22b">Qwen 235B</option>
-                        <option value="moonshotai/kimi-k2-instruct">Kimi K2</option>
-                      </optgroup>
-                    </select>
-                  </div>
-
                   {/* Server URL */}
                   <div>
                     <label htmlFor="settings-server-url" className="block text-xs font-display font-medium text-text-secondary mb-1.5 tracking-wide uppercase">Server URL</label>
