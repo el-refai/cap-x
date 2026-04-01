@@ -1,11 +1,11 @@
 from .base_api import list_apis, register_api
 from .franka.control import FrankaControlApi
+from .franka.control_privileged import FrankaControlPrivilegedApi
 from .franka.control_reduced import FrankaControlApiReduced
 from .franka.control_reduced_skill_library import FrankaControlApiReducedSkillLibrary
 from .franka.control_reduced_exampleless import FrankaControlApiReducedExampleless
 from .franka.nut_assembly_privileged import FrankaControlNutAssemblyPrivilegedApi
 from .franka.nut_assembly_visual import FrankaControlNutAssemblyVisualApi
-from .franka.privileged import FrankaControlPrivilegedApi
 from .franka.spill_wipe import FrankaControlSpillWipeApi
 from .franka.spill_wipe_privileged import FrankaControlSpillWipePrivilegedApi
 from .franka.handover_privileged import FrankaHandoverPrivilegedApi
@@ -13,6 +13,7 @@ from .franka.handover import FrankaHandoverApi
 from .franka.handover_reduced import FrankaHandoverApiReduced
 from .franka.handover_reduced_exampleless import FrankaHandoverApiReducedExampleless
 from .franka.two_arm_lift import FrankaTwoArmLiftApi
+from .franka.two_arm_lift_privileged import FrankaTwoArmLiftPrivilegedApi
 try:
     from .franka.libero import FrankaLiberoApi
     from .franka.libero_privileged import FrankaLiberoPrivilegedApi
@@ -21,8 +22,7 @@ try:
     _libero_available = True
 except ImportError:
     _libero_available = False
-    print("LIBERO/CuRobo not installed, skipping Libero APIs")
-from .franka.two_arm_lift_privileged import FrankaTwoArmLiftPrivilegedApi
+    print("LIBERO not installed, skipping LIBERO APIs")
 
 register_api("FrankaControlPrivilegedApi", FrankaControlPrivilegedApi)
 register_api("FrankaControlApi", lambda env: FrankaControlApi(env, use_sam3=True))
@@ -59,6 +59,7 @@ register_api(
     lambda env: FrankaControlApiReducedSkillLibrary(env, bimanual=True, is_handover=True)
 )
 
+# For spill wipe environment, we use a custom tcp offset of -0.0158m since panda end effector has been modified by robosuite to have the sponge attachement
 register_api(
     "FrankaControlSpillWipeApi",
     lambda env: FrankaControlSpillWipeApi(env, tcp_offset=[0.0, 0.0, -0.0158], use_sam3=True),
@@ -79,8 +80,6 @@ register_api(
         env, tcp_offset=[0.0, 0.0, -0.0158], is_spill_wipe=True
     ),
 )
-
-# For spill wipe environment, we use a custom tcp offset of -0.0158m since panda end effector has been modified by robosuite to have the sponge attachement
 
 register_api("FrankaHandoverPrivilegedApi", FrankaHandoverPrivilegedApi)
 register_api("FrankaHandoverApi", FrankaHandoverApi)
@@ -121,7 +120,7 @@ try:
     from .r1pro.control import R1ProControlApi
     register_api("R1ProControlApi", lambda env: R1ProControlApi(env, use_sam3=True))
 except ImportError:
-    print("R1ProControlApi not found")
+    print("R1Pro not installed, skipping R1Pro APIs")
 
 if _libero_available:
     register_api("FrankaLiberoPrivilegedApi", FrankaLiberoPrivilegedApi)
